@@ -1,6 +1,6 @@
 === LoginSuite - WordPress Login Page Customizer ===
 Contributors: ruhul105
-Tags: login, customization, logo, admin, branding, login page, custom login, login customizer
+Tags: wp-login, login, login customizer, custom login, wordpress login
 Requires at least: 5.0
 Tested up to: 6.7.2
 Stable tag: 1.1.1

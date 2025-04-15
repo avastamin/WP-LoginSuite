@@ -49,10 +49,10 @@ class WP_Admin_Logo_Customization {
                 <table class="form-table">
                     <tr>
                         <th>Login Logo</th>
-                        <td>
+                        <td style="display: flex; flex-direction: column-reverse; align-items: left; gap: 10px; max-width: 400px;">
                             <input type="file" name="wp_alc_settings[login_logo]" accept="image/*">
                             <?php if (isset($options['login_logo'])): ?>
-                                <div id="logo-preview" style="margin-top: 10px; position: relative; display: inline-block;">
+                                <div id="logo-preview" style="margin-top: 10px; position: relative; display: inline-block; max-width: 230px;">
                                     <img src="<?php echo esc_url($options['login_logo']); ?>" style="max-width: 200px;">
                                     <span class="remove-logo" style="position: absolute; top: -10px; right: -10px; cursor: pointer; background: #dc3545; color: white; border-radius: 50%; width: 20px; height: 20px; text-align: center; line-height: 20px;">×</span>
                                     <input type="hidden" name="wp_alc_settings[remove_login_logo]" id="remove-logo-input" value="0">
