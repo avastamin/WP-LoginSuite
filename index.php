@@ -50,8 +50,10 @@ class WP_Admin_Logo_Customization {
                         <td>
                             <input type="file" name="wp_alc_settings[login_logo]" accept="image/*">
                             <?php if (isset($options['login_logo'])): ?>
-                                <div style="margin-top: 10px;">
+                                <div id="logo-preview" style="margin-top: 10px; position: relative; display: inline-block;">
                                     <img src="<?php echo esc_url($options['login_logo']); ?>" style="max-width: 200px;">
+                                    <span class="remove-logo" style="position: absolute; top: -10px; right: -10px; cursor: pointer; background: #dc3545; color: white; border-radius: 50%; width: 20px; height: 20px; text-align: center; line-height: 20px;">×</span>
+                                    <input type="hidden" name="wp_alc_settings[remove_login_logo]" id="remove-logo-input" value="0">
                                 </div>
                             <?php endif; ?>
                         </td>
@@ -59,7 +61,21 @@ class WP_Admin_Logo_Customization {
                     <tr>
                         <th>Background Color</th>
                         <td>
-                            <input type="color" name="wp_alc_settings[bg_color]" value="<?php echo isset($options['bg_color']) ? esc_attr($options['bg_color']) : '#ffffff'; ?>">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="color" name="wp_alc_settings[bg_color]" id="bg-color-picker" value="<?php echo isset($options['bg_color']) ? esc_attr($options['bg_color']) : '#ffffff'; ?>">
+                                <button type="button" id="reset-bg-color" class="button button-secondary" style="height: 30px;">Reset to Default</button>
+                                <input type="hidden" name="wp_alc_settings[reset_bg_color]" id="reset-bg-color-input" value="0">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Text Color</th>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="color" name="wp_alc_settings[text_color]" id="text-color-picker" value="<?php echo isset($options['text_color']) ? esc_attr($options['text_color']) : '#3c434a'; ?>">
+                                <button type="button" id="reset-text-color" class="button button-secondary" style="height: 30px;">Reset to Default</button>
+                                <input type="hidden" name="wp_alc_settings[reset_text_color]" id="reset-text-color-input" value="0">
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -82,6 +98,31 @@ class WP_Admin_Logo_Customization {
                 <?php submit_button(); ?>
             </form>
         </div>
+
+        <style>
+            .remove-logo:hover {
+                background: #c82333 !important;
+            }
+        </style>
+
+        <script>
+            jQuery(document).ready(function($) {
+                $('.remove-logo').on('click', function() {
+                    $('#logo-preview').hide();
+                    $('#remove-logo-input').val('1');
+                });
+
+                $('#reset-bg-color').on('click', function() {
+                    $('#bg-color-picker').val('#ffffff');
+                    $('#reset-bg-color-input').val('1');
+                });
+
+                $('#reset-text-color').on('click', function() {
+                    $('#text-color-picker').val('#3c434a');
+                    $('#reset-text-color-input').val('1');
+                });
+            });
+        </script>
         <?php
     }
 
@@ -92,6 +133,15 @@ class WP_Admin_Logo_Customization {
     public function handle_file_upload($options) {
         $existing_options = get_option('wp_alc_settings');
 
+        // Check if user wants to remove logo
+        if (isset($options['remove_login_logo']) && $options['remove_login_logo'] == 1) {
+            unset($existing_options['login_logo']);
+            // Merge back other options
+            $options = array_merge($existing_options, $options);
+            unset($options['remove_login_logo']);
+            return $options;
+        }
+
         // Check if user wants to remove background image
         if (isset($options['remove_bg_image']) && $options['remove_bg_image'] == 1) {
             // Preserve all existing options except background image
@@ -99,6 +149,16 @@ class WP_Admin_Logo_Customization {
             unset($options['bg_image']);
             unset($options['remove_bg_image']);
             return $options;
+        }
+
+        // Check if background color reset is requested
+        if (isset($options['reset_bg_color']) && $options['reset_bg_color'] == 1) {
+            $options['bg_color'] = '#ffffff';
+        }
+
+        // Check if text color reset is requested
+        if (isset($options['reset_text_color']) && $options['reset_text_color'] == 1) {
+            $options['text_color'] = '#3c434a'; // WordPress default text color
         }
 
         if (!empty($_FILES['wp_alc_settings'])) {
@@ -152,8 +212,11 @@ class WP_Admin_Logo_Customization {
             $options['bg_color'] = $existing_options['bg_color'];
         }
         
-        // Always remove the checkbox value from options
+        // Always remove the checkbox values from options
+        unset($options['remove_login_logo']);
         unset($options['remove_bg_image']);
+        unset($options['reset_bg_color']);
+        unset($options['reset_text_color']);
         return $options;
     }
 
@@ -188,6 +251,10 @@ class WP_Admin_Logo_Customization {
                         background-position: center;
                         background-repeat: no-repeat;
                     <?php endif; ?>
+
+                    <?php if (isset($options['text_color'])): ?>
+                        color: <?php echo esc_attr($options['text_color']); ?>;
+                    <?php endif; ?>
                 }
                 
                 .login h1 a {
@@ -198,6 +265,23 @@ class WP_Admin_Logo_Customization {
                         height: 120px;
                     <?php endif; ?>
                 }
+
+                <?php if (isset($options['text_color'])): ?>
+                    .login label,
+                    .login #nav a,
+                    .login #backtoblog a,
+                    .login .message,
+                    .login .privacy-policy-page-link a {
+                        color: <?php echo esc_attr($options['text_color']); ?> !important;
+                    }
+                    
+                    .login #nav a:hover,
+                    .login #backtoblog a:hover,
+                    .login .privacy-policy-page-link a:hover {
+                        color: <?php echo esc_attr($options['text_color']); ?> !important;
+                        opacity: 0.8;
+                    }
+                <?php endif; ?>
             </style>
             <?php
         }
