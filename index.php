@@ -1,14 +1,14 @@
 <?php
-/**
- * Plugin Name: Admin Logo Customization
- * Plugin URI: http://ruhulamin.me
- * Description: Customize your WordPress admin and login page logo easily
- * Version: 1.1.0
- * Author: Ruhul Amin
- * Author URI: http://www.ruhulamin.me
- * License: GPL2
- * Text Domain: wp-admin-logo
- */
+/*
+Plugin Name: LoginSuite - WordPress Login Page Customizer
+Plugin URI: http://www.ruhulamin.me/
+Description: Easily customize your WordPress login page with custom logo, background colors, images, and more.
+Version: 1.1.1
+Author: ruhul105
+Author URI: http://www.ruhulamin.me/
+License: GPLv2 or later
+Text Domain: wp-admin-logo
+*/
 
 // If this file is called directly, abort.
 if (!defined('WPINC')) {
@@ -26,12 +26,14 @@ class WP_Admin_Logo_Customization {
     }
 
     public function add_plugin_page() {
-        add_options_page(
-            __('Login Logo Settings', 'wp-admin-logo'),
-            __('Login Logo', 'wp-admin-logo'),
+        add_menu_page(
+            __('LoginSuite', 'wp-admin-logo'),
+            __('LoginSuite', 'wp-admin-logo'),
             'manage_options',
             'wp-admin-logo',
-            array($this, 'create_admin_page')
+            array($this, 'create_admin_page'),
+            'dashicons-admin-appearance',
+            60
         );
     }
 
@@ -251,7 +253,7 @@ class WP_Admin_Logo_Customization {
     }
 
     public function enqueue_admin_scripts($hook) {
-        if('settings_page_wp-admin-logo' !== $hook) {
+        if('toplevel_page_wp-admin-logo' !== $hook) {
             return;
         }
 

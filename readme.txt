@@ -1,61 +1,107 @@
-=== Admin Login Logo Customization ===
+=== LoginSuite - WordPress Login Page Customizer ===
 Contributors: ruhul105
-Tags: login, logo, admin, customize, branding
+Tags: login, customization, logo, admin, branding, login page, custom login, login customizer
 Requires at least: 5.0
 Tested up to: 6.7.2
-Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily customize your WordPress login page logo through a simple settings interface.
+Easily customize your WordPress login page with custom logo, background colors, images, and more.
 
 == Description ==
 
-Admin Login Logo Customization allows you to easily change the default WordPress logo on the login page. Simply upload your custom logo through the settings page and it will be automatically applied to your login screen.
+LoginSuite allows you to completely customize your WordPress login page. Change the logo, background colors, add background images, and customize text colors to match your brand identity.
+
+[youtube https://www.youtube.com/watch?v=pKTdyIz7z1s]
 
 Features:
-* Easy logo upload through WordPress Media Library
-* Live preview of your logo
-* Responsive design support
-* Simple and intuitive interface under Settings menu
-* Proper scaling and positioning of your logo
-* Compatible with latest WordPress versions (6.0 - 6.4)
+
+* Custom login logo upload with easy removal
+* Background color customization with color picker
+* Background image upload with advanced settings:
+  - Multiple background sizes (cover, contain, auto)
+  - Background repeat options (no-repeat, repeat, repeat-x, repeat-y)
+  - Background position control (9 different positions)
+* Text color customization
+* One-click reset options for colors
+* Responsive design
+* Easy to use interface
+
+== Video Tutorial ==
+
+Watch our video tutorial to learn how to use LoginSuite:
+[youtube https://www.youtube.com/watch?v=pKTdyIz7z1s]
+
+Learn how to:
+* Install and activate the plugin
+* Upload and customize your login logo
+* Set up background colors and images
+* Configure text colors
+* Use advanced background image settings
+* Reset to default settings
 
 == Installation ==
 
-1. Upload the plugin files to `/wp-content/plugins/wp-admin-logo-customization`
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to Settings -> Login Logo to configure your custom logo
+1. Upload the plugin files to the `/wp-content/plugins/wp-admin-logo-customization` directory, or install the plugin through the WordPress plugins screen directly.
+2. Activate the plugin through the 'Plugins' screen in WordPress
+3. Go to 'LoginSuite' in your WordPress admin menu
+4. Start customizing:
+   * Upload your custom login logo
+   * Choose background and text colors
+   * Upload and configure background image
+   * Preview changes on your login page
+
+== Usage ==
+
+1. Logo Customization:
+   * Click "Choose File" to upload your logo
+   * Use the X icon to remove existing logo
+   * Recommended logo size: 320px width for best results
+
+2. Background Color:
+   * Use the color picker to choose a background color
+   * Click "Reset to Default" to return to white
+
+3. Text Color:
+   * Use the color picker to choose text color
+   * Click "Reset to Default" to return to default WordPress color
+   * Affects all text and links on the login page
+
+4. Background Image:
+   * Upload any image as background
+   * Configure background settings:
+     - Size: Cover, Contain, or Auto
+     - Repeat: No Repeat, Repeat All, Repeat Horizontally, or Repeat Vertically
+     - Position: 9 different position options
+   * Use checkbox to remove background image
 
 == Frequently Asked Questions ==
 
-= Is this plugin compatible with the latest WordPress version? =
-Yes, this plugin is regularly tested and updated to ensure compatibility with the latest WordPress versions. It has been tested up to WordPress 6.4.3.
+= Can I use both background color and image? =
+Yes, you can set both a background color and image. The background color will show through any transparent areas of the image.
 
-= Where can I find the settings page? =
-The settings page is located under Settings -> Login Logo in your WordPress admin panel.
+= What image formats are supported? =
+The plugin supports all major web image formats including JPG, PNG, GIF, and WebP.
 
-= What is the recommended logo size? =
-The recommended size is 320px by 80px for optimal display. However, the plugin will automatically scale your logo to fit properly.
+= Can I revert back to default settings? =
+Yes, each feature has its own reset option to return to default WordPress styling.
 
-= Can I use any image format? =
-Yes, you can use any web-supported image format (JPG, PNG, GIF). We recommend using PNG format for logos with transparency.
+== Screenshots ==
 
-= Will this affect my site's frontend logo? =
-No, this plugin only changes the logo on the WordPress login page (/wp-login.php).
+1. LoginSuite admin interface
+2. Example of customized login page
 
 == Changelog ==
 
 = 1.1.0 =
-* Added compatibility with WordPress 6.4.3
-* Moved settings page to Settings menu for better organization
-* Improved media uploader integration
-* Added live preview functionality
-* Better responsive support
-* Code optimization and security improvements
-* Fixed logo scaling and positioning issues
-* Added PHP 7.4+ compatibility
+* Added text color customization
+* Added background image position controls
+* Added background repeat options
+* Added background size options
+* Added one-click reset features
+* Improved UI with instant preview options
+* Added X icon for easy logo removal
 
 = 1.0.0 =
 * Initial release
@@ -63,12 +109,7 @@ No, this plugin only changes the logo on the WordPress login page (/wp-login.php
 == Upgrade Notice ==
 
 = 1.1.0 =
-This version includes WordPress 6.4.3 compatibility and improved media uploader integration. Settings are now under Settings -> Login Logo.
-
-== Screenshots ==
-
-1. Settings page under Settings -> Login Logo
-2. Logo upload interface with preview
+Major update with new features including text color customization, advanced background controls, and improved user interface.
 
 == Support ==
 
