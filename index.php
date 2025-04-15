@@ -85,11 +85,41 @@ class WP_Admin_Logo_Customization {
                             <?php if (isset($options['bg_image'])): ?>
                                 <div style="margin-top: 10px;">
                                     <img src="<?php echo esc_url($options['bg_image']); ?>" style="max-width: 200px;">
-                                    <br>
-                                    <label>
-                                        <input type="checkbox" name="wp_alc_settings[remove_bg_image]" value="1">
-                                        Remove background image
-                                    </label>
+                                    <div style="margin-top: 10px;">
+                                        <label style="display: block; margin-bottom: 5px;">Background Size:</label>
+                                        <select name="wp_alc_settings[bg_size]" style="margin-bottom: 10px;">
+                                            <option value="cover" <?php selected(isset($options['bg_size']) ? $options['bg_size'] : 'cover', 'cover'); ?>>Cover</option>
+                                            <option value="contain" <?php selected(isset($options['bg_size']) ? $options['bg_size'] : 'cover', 'contain'); ?>>Contain</option>
+                                            <option value="auto" <?php selected(isset($options['bg_size']) ? $options['bg_size'] : 'cover', 'auto'); ?>>Auto</option>
+                                        </select>
+
+                                        <label style="display: block; margin-bottom: 5px;">Background Repeat:</label>
+                                        <select name="wp_alc_settings[bg_repeat]" style="margin-bottom: 10px;">
+                                            <option value="no-repeat" <?php selected(isset($options['bg_repeat']) ? $options['bg_repeat'] : 'no-repeat', 'no-repeat'); ?>>No Repeat</option>
+                                            <option value="repeat" <?php selected(isset($options['bg_repeat']) ? $options['bg_repeat'] : 'no-repeat', 'repeat'); ?>>Repeat</option>
+                                            <option value="repeat-x" <?php selected(isset($options['bg_repeat']) ? $options['bg_repeat'] : 'no-repeat', 'repeat-x'); ?>>Repeat Horizontally</option>
+                                            <option value="repeat-y" <?php selected(isset($options['bg_repeat']) ? $options['bg_repeat'] : 'no-repeat', 'repeat-y'); ?>>Repeat Vertically</option>
+                                        </select>
+
+                                        <label style="display: block; margin-bottom: 5px;">Background Position:</label>
+                                        <select name="wp_alc_settings[bg_position]" style="margin-bottom: 10px;">
+                                            <option value="center center" <?php selected(isset($options['bg_position']) ? $options['bg_position'] : 'center center', 'center center'); ?>>Center</option>
+                                            <option value="left top" <?php selected(isset($options['bg_position']) ? $options['bg_position'] : 'center center', 'left top'); ?>>Left Top</option>
+                                            <option value="left center" <?php selected(isset($options['bg_position']) ? $options['bg_position'] : 'center center', 'left center'); ?>>Left Center</option>
+                                            <option value="left bottom" <?php selected(isset($options['bg_position']) ? $options['bg_position'] : 'center center', 'left bottom'); ?>>Left Bottom</option>
+                                            <option value="right top" <?php selected(isset($options['bg_position']) ? $options['bg_position'] : 'center center', 'right top'); ?>>Right Top</option>
+                                            <option value="right center" <?php selected(isset($options['bg_position']) ? $options['bg_position'] : 'center center', 'right center'); ?>>Right Center</option>
+                                            <option value="right bottom" <?php selected(isset($options['bg_position']) ? $options['bg_position'] : 'center center', 'right bottom'); ?>>Right Bottom</option>
+                                            <option value="center top" <?php selected(isset($options['bg_position']) ? $options['bg_position'] : 'center center', 'center top'); ?>>Center Top</option>
+                                            <option value="center bottom" <?php selected(isset($options['bg_position']) ? $options['bg_position'] : 'center center', 'center bottom'); ?>>Center Bottom</option>
+                                        </select>
+
+                                        <br>
+                                        <label>
+                                            <input type="checkbox" name="wp_alc_settings[remove_bg_image]" value="1">
+                                            Remove background image
+                                        </label>
+                                    </div>
                                 </div>
                             <?php endif; ?>
                         </td>
@@ -247,9 +277,9 @@ class WP_Admin_Logo_Customization {
                     
                     <?php if (isset($options['bg_image'])): ?>
                         background-image: url('<?php echo esc_url($options['bg_image']); ?>');
-                        background-size: cover;
-                        background-position: center;
-                        background-repeat: no-repeat;
+                        background-size: <?php echo isset($options['bg_size']) ? esc_attr($options['bg_size']) : 'cover'; ?>;
+                        background-position: <?php echo isset($options['bg_position']) ? esc_attr($options['bg_position']) : 'center center'; ?>;
+                        background-repeat: <?php echo isset($options['bg_repeat']) ? esc_attr($options['bg_repeat']) : 'no-repeat'; ?>;
                     <?php endif; ?>
 
                     <?php if (isset($options['text_color'])): ?>
