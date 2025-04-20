@@ -11,7 +11,7 @@ Easily customize your WordPress login page with custom logo, background colors, 
 
 == Description ==
 
-LoginSuite allows you to completely customize your WordPress login page. Change the logo, background colors, add background images, and customize text colors to match your brand identity.
+LoginSuite allows you to completely customize your WordPress login page. Change the logo, background colors, add background images, and customize text colors to match your brand identity.We highly recommend checking out the demo video to see how easily you can customize your WordPress login page.
 
 [youtube https://www.youtube.com/watch?v=pKTdyIz7z1s]
 
