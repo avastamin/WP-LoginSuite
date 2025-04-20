@@ -126,6 +126,32 @@ class WP_Admin_Logo_Customization {
                             </div>
                         </td>
                     </tr>
+                    <tr>
+                        <th>Form Field Border Color</th>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="color" 
+                                       name="wp_alc_settings[field_border_color]" 
+                                       id="field-border-color-picker" 
+                                       value="<?php echo isset($options['field_border_color']) ? esc_attr($options['field_border_color']) : '#dcdcde'; ?>">
+                                <button type="button" id="reset-field-border-color" class="button button-secondary" style="height: 30px;">Reset to Default</button>
+                                <input type="hidden" name="wp_alc_settings[reset_field_border_color]" id="reset-field-border-color-input" value="0">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Button Background Color</th>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="color" 
+                                       name="wp_alc_settings[button_bg_color]" 
+                                       id="button-bg-color-picker" 
+                                       value="<?php echo isset($options['button_bg_color']) ? esc_attr($options['button_bg_color']) : '#2271b1'; ?>">
+                                <button type="button" id="reset-button-bg-color" class="button button-secondary" style="height: 30px;">Reset to Default</button>
+                                <input type="hidden" name="wp_alc_settings[reset_button_bg_color]" id="reset-button-bg-color-input" value="0">
+                            </div>
+                        </td>
+                    </tr>
                 </table>
                 <?php submit_button(); ?>
             </form>
@@ -152,6 +178,16 @@ class WP_Admin_Logo_Customization {
                 $('#reset-text-color').on('click', function() {
                     $('#text-color-picker').val('#3c434a');
                     $('#reset-text-color-input').val('1');
+                });
+
+                $('#reset-field-border-color').on('click', function() {
+                    $('#field-border-color-picker').val('#dcdcde');
+                    $('#reset-field-border-color-input').val('1');
+                });
+
+                $('#reset-button-bg-color').on('click', function() {
+                    $('#button-bg-color-picker').val('#2271b1');
+                    $('#reset-button-bg-color-input').val('1');
                 });
             });
         </script>
@@ -191,6 +227,14 @@ class WP_Admin_Logo_Customization {
         // Check if text color reset is requested
         if (isset($options['reset_text_color']) && $options['reset_text_color'] == 1) {
             $options['text_color'] = '#3c434a'; // WordPress default text color
+        }
+
+        // Handle color resets
+        if (isset($options['reset_field_border_color']) && $options['reset_field_border_color'] == 1) {
+            $options['field_border_color'] = '#dcdcde';
+        }
+        if (isset($options['reset_button_bg_color']) && $options['reset_button_bg_color'] == 1) {
+            $options['button_bg_color'] = '#2271b1';
         }
 
         if (!empty($_FILES['wp_alc_settings'])) {
@@ -249,6 +293,8 @@ class WP_Admin_Logo_Customization {
         unset($options['remove_bg_image']);
         unset($options['reset_bg_color']);
         unset($options['reset_text_color']);
+        unset($options['reset_field_border_color']);
+        unset($options['reset_button_bg_color']);
         return $options;
     }
 
@@ -314,9 +360,67 @@ class WP_Admin_Logo_Customization {
                         opacity: 0.8;
                     }
                 <?php endif; ?>
+
+                /* Add new form field and button styles */
+                .login form .input,
+                .login input[type="text"],
+                .login input[type="password"] {
+                    <?php if (isset($options['field_border_color'])): ?>
+                    border-color: <?php echo esc_attr($options['field_border_color']); ?> !important;
+                    <?php endif; ?>
+                }
+
+                .login form .input:focus,
+                .login input[type="text"]:focus,
+                .login input[type="password"]:focus {
+                    <?php if (isset($options['field_border_color'])): ?>
+                    border-color: <?php echo esc_attr($options['field_border_color']); ?> !important;
+                    box-shadow: 0 0 0 1px <?php echo esc_attr($options['field_border_color']); ?> !important;
+                    <?php endif; ?>
+                }
+
+                .login .button-primary {
+                    <?php if (isset($options['button_bg_color'])): ?>
+                    background: <?php echo esc_attr($options['button_bg_color']); ?> !important;
+                    border-color: <?php echo esc_attr($options['button_bg_color']); ?> !important;
+                    <?php endif; ?>
+                }
+
+                .login .button-primary:hover,
+                .login .button-primary:focus, 
+                 {
+                    <?php if (isset($options['button_bg_color'])): ?>
+                    background: <?php echo esc_attr($this->adjust_brightness($options['button_bg_color'], -20)); ?> !important;
+                    border-color: <?php echo esc_attr($this->adjust_brightness($options['button_bg_color'], -20)); ?> !important;
+                    <?php endif; ?>
+                }
+                .login .wp-hide-pw, .login .wp-hide-pw:hover {
+                    <?php if (isset($options['button_bg_color'])): ?>
+                    color: <?php echo esc_attr($this->adjust_brightness($options['button_bg_color'], -20)); ?> !important;
+                    <?php endif; ?>
+                    outline: none !important;
+                }
             </style>
             <?php
         }
+    }
+
+    private function adjust_brightness($hex, $steps) {
+        // Remove # if present
+        $hex = ltrim($hex, '#');
+        
+        // Convert to RGB
+        $r = hexdec(substr($hex, 0, 2));
+        $g = hexdec(substr($hex, 2, 2));
+        $b = hexdec(substr($hex, 4, 2));
+        
+        // Adjust brightness
+        $r = max(0, min(255, $r + $steps));
+        $g = max(0, min(255, $g + $steps));
+        $b = max(0, min(255, $b + $steps));
+        
+        // Convert back to hex
+        return sprintf("#%02x%02x%02x", $r, $g, $b);
     }
 }
 
