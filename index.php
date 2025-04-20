@@ -71,16 +71,6 @@ class WP_Admin_Logo_Customization {
                         </td>
                     </tr>
                     <tr>
-                        <th>Text Color</th>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <input type="color" name="wp_alc_settings[text_color]" id="text-color-picker" value="<?php echo isset($options['text_color']) ? esc_attr($options['text_color']) : '#3c434a'; ?>">
-                                <button type="button" id="reset-text-color" class="button button-secondary" style="height: 30px;">Reset to Default</button>
-                                <input type="hidden" name="wp_alc_settings[reset_text_color]" id="reset-text-color-input" value="0">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
                         <th>Background Image</th>
                         <td>
                             <input type="file" name="wp_alc_settings[bg_image]" accept="image/*">
@@ -124,6 +114,16 @@ class WP_Admin_Logo_Customization {
                                     </div>
                                 </div>
                             <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Text Color</th>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="color" name="wp_alc_settings[text_color]" id="text-color-picker" value="<?php echo isset($options['text_color']) ? esc_attr($options['text_color']) : '#3c434a'; ?>">
+                                <button type="button" id="reset-text-color" class="button button-secondary" style="height: 30px;">Reset to Default</button>
+                                <input type="hidden" name="wp_alc_settings[reset_text_color]" id="reset-text-color-input" value="0">
+                            </div>
                         </td>
                     </tr>
                 </table>
