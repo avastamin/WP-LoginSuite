@@ -18,12 +18,16 @@ LoginSuite allows you to completely customize your WordPress login page. Change 
 Features:
 
 * Custom login logo upload with easy removal
+* Custom logo link configuration
 * Background color customization with color picker
 * Background image upload with advanced settings:
   - Multiple background sizes (cover, contain, auto)
   - Background repeat options (no-repeat, repeat, repeat-x, repeat-y)
   - Background position control (9 different positions)
 * Text color customization
+* Form field border color customization
+* Button background color customization
+* Custom login redirect URL
 * One-click reset options for colors
 * Responsive design
 * Easy to use interface
@@ -58,6 +62,7 @@ Learn how to:
    * Click "Choose File" to upload your logo
    * Use the X icon to remove existing logo
    * Recommended logo size: 320px width for best results
+   * Set custom URL for logo link (optional)
 
 2. Background Color:
    * Use the color picker to choose a background color
@@ -76,6 +81,16 @@ Learn how to:
      - Position: 9 different position options
    * Use checkbox to remove background image
 
+5. Form Customization:
+   * Customize form field border color
+   * Customize button background color
+   * Reset options available for all colors
+
+6. Login Redirect:
+   * Set custom URL for redirect after successful login
+   * Leave empty to use default WordPress behavior
+   * Supports both internal and external URLs
+
 == Frequently Asked Questions ==
 
 = Can I use both background color and image? =
@@ -93,6 +108,14 @@ Yes, each feature has its own reset option to return to default WordPress stylin
 2. Example of customized login page
 
 == Changelog ==
+
+= 1.1.2 =
+* Added custom logo link functionality
+* Added login redirect URL feature
+* Added form field border color customization
+* Added button background color customization
+* Improved URL validation for custom links
+* Enhanced security for redirect handling
 
 = 1.1.0 =
 * Added text color customization
