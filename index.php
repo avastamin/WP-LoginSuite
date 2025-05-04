@@ -64,6 +64,17 @@ class WP_Admin_Logo_Customization {
                         </td>
                     </tr>
                     <tr>
+                        <th>Custom Logo Link</th>
+                        <td>
+                            <input type="url" 
+                                   name="wp_alc_settings[custom_logo_link]" 
+                                   class="regular-text" 
+                                   value="<?php echo isset($options['custom_logo_link']) ? esc_url($options['custom_logo_link']) : ''; ?>"
+                                   placeholder="https://example.com">
+                            <p class="description">Leave empty to use default WordPress behavior</p>
+                        </td>
+                    </tr>
+                    <tr>
                         <th>Background Color</th>
                         <td>
                             <div style="display: flex; align-items: center; gap: 10px;">
@@ -153,17 +164,6 @@ class WP_Admin_Logo_Customization {
                                 <button type="button" id="reset-button-bg-color" class="button button-secondary" style="height: 30px;">Reset to Default</button>
                                 <input type="hidden" name="wp_alc_settings[reset_button_bg_color]" id="reset-button-bg-color-input" value="0">
                             </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Custom Logo Link</th>
-                        <td>
-                            <input type="url" 
-                                   name="wp_alc_settings[custom_logo_link]" 
-                                   class="regular-text" 
-                                   value="<?php echo isset($options['custom_logo_link']) ? esc_url($options['custom_logo_link']) : ''; ?>"
-                                   placeholder="https://example.com">
-                            <p class="description">Leave empty to use default WordPress behavior</p>
                         </td>
                     </tr>
                     <tr>
