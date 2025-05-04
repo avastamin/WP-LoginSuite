@@ -23,6 +23,9 @@ class WP_Admin_Logo_Customization {
         add_action('admin_init', array($this, 'init_settings'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
         add_action('login_head', array($this, 'custom_login_logo'));
+        add_filter('login_headerurl', array($this, 'custom_login_logo_url'));
+        add_filter('login_redirect', array($this, 'custom_login_redirect'), 10, 3);
+        add_filter('wp_login_errors', array($this, 'handle_login_redirect'), 10, 2);
     }
 
     public function add_plugin_page() {
@@ -152,6 +155,28 @@ class WP_Admin_Logo_Customization {
                             </div>
                         </td>
                     </tr>
+                    <tr>
+                        <th>Custom Logo Link</th>
+                        <td>
+                            <input type="url" 
+                                   name="wp_alc_settings[custom_logo_link]" 
+                                   class="regular-text" 
+                                   value="<?php echo isset($options['custom_logo_link']) ? esc_url($options['custom_logo_link']) : ''; ?>"
+                                   placeholder="https://example.com">
+                            <p class="description">Leave empty to use default WordPress behavior</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Login Redirect URL</th>
+                        <td>
+                            <input type="url" 
+                                   name="wp_alc_settings[login_redirect_url]" 
+                                   class="regular-text" 
+                                   value="<?php echo isset($options['login_redirect_url']) ? esc_url($options['login_redirect_url']) : ''; ?>"
+                                   placeholder="https://example.com">
+                            <p class="description">Leave empty to use default WordPress behavior</p>
+                        </td>
+                    </tr>
                 </table>
                 <?php submit_button(); ?>
             </form>
@@ -200,6 +225,32 @@ class WP_Admin_Logo_Customization {
 
     public function handle_file_upload($options) {
         $existing_options = get_option('wp_alc_settings');
+
+        // Validate custom logo link URL
+        if (!empty($options['custom_logo_link'])) {
+            if (!filter_var($options['custom_logo_link'], FILTER_VALIDATE_URL)) {
+                add_settings_error(
+                    'wp_alc_settings',
+                    'invalid_logo_url',
+                    'Please enter a valid URL for the custom logo link.',
+                    'error'
+                );
+                $options['custom_logo_link'] = '';
+            }
+        }
+
+        // Validate login redirect URL
+        if (!empty($options['login_redirect_url'])) {
+            if (!filter_var($options['login_redirect_url'], FILTER_VALIDATE_URL)) {
+                add_settings_error(
+                    'wp_alc_settings',
+                    'invalid_redirect_url',
+                    'Please enter a valid URL for the login redirect.',
+                    'error'
+                );
+                $options['login_redirect_url'] = '';
+            }
+        }
 
         // Check if user wants to remove logo
         if (isset($options['remove_login_logo']) && $options['remove_login_logo'] == 1) {
@@ -421,6 +472,34 @@ class WP_Admin_Logo_Customization {
         
         // Convert back to hex
         return sprintf("#%02x%02x%02x", $r, $g, $b);
+    }
+
+    public function custom_login_logo_url($url) {
+        $options = get_option('wp_alc_settings');
+        if (!empty($options['custom_logo_link'])) {
+            return esc_url($options['custom_logo_link']);
+        }
+        return $url;
+    }
+
+    public function custom_login_redirect($redirect_to, $requested_redirect_to, $user) {
+        $options = get_option('wp_alc_settings');
+        if (!empty($options['login_redirect_url'])) {
+            // Store the custom redirect URL in a transient
+            set_transient('wp_alc_login_redirect', $options['login_redirect_url'], 60);
+            return $redirect_to;
+        }
+        return $redirect_to;
+    }
+
+    public function handle_login_redirect($errors, $redirect_to) {
+        $custom_redirect = get_transient('wp_alc_login_redirect');
+        if ($custom_redirect) {
+            delete_transient('wp_alc_login_redirect');
+            wp_redirect($custom_redirect);
+            exit;
+        }
+        return $errors;
     }
 }
 
