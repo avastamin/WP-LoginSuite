@@ -3,7 +3,7 @@
 Plugin Name: LoginSuite - WordPress Login Page Customizer
 Plugin URI: http://www.ruhulamin.me/
 Description: Easily customize your WordPress login page with custom logo, background colors, images, and more.
-Version: 1.1.2
+Version: 1.1.3
 Author: ruhul105
 Author URI: http://www.ruhulamin.me/
 License: GPLv2 or later
